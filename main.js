@@ -1,6 +1,44 @@
 const api = {
   key: "31c58aaeb1638c05b26bfce261e876ed",
   base: "https://api.openweathermap.org/data/2.5/"
+
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+   fetch(`${api.base}weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&lang=se&units=metric&appid=${api.key}`)
+    .then(weather => {
+      return weather.json();
+    }).then(displayResults);
+
+}
+
+  function displayResults (weather) {
+    let city = document.querySelector('.location .city');
+    city.innerText = `${weather.name}, ${weather.sys.country}`;
+  
+    let now = new Date();
+    let date = document.querySelector('.location .date');
+    date.innerText = dateBuilder(now);
+  
+    let temp = document.querySelector('.current .temp');
+    temp.innerHTML = `${Math.round(weather.main.temp)}<span>°c</span>`;
+  
+    let weather_el = document.querySelector('.current .weather');
+    weather_el.innerText = weather.weather[0].main;
+    
+    let hilow = document.querySelector('.hi-low');
+    hilow.innerText = `${Math.round(weather.main.temp_min)}°c / ${Math.round(weather.main.temp_max)}°c`;
+  
 }
 
 const searchbox = document.querySelector('.search-box');
@@ -10,14 +48,29 @@ function setQuery(evt) {
   if (evt.keyCode == 13) {
     getResults(searchbox.value);
   }
+
+  
 }
+
+function getResults (query) {
+  var div = document.getElementyById('button');
+  div.style.display = 'none';
+}
+
 
 function getResults (query) {
   fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     .then(weather => {
       return weather.json();
     }).then(displayResults);
+    var appBanners = document.getElementsByClassName('button');
+
+for (var i = 0; i < appBanners.length; i ++) {
+    appBanners[i].style.display = 'none';
 }
+
+}
+
 
 function displayResults (weather) {
   let city = document.querySelector('.location .city');
@@ -32,10 +85,23 @@ function displayResults (weather) {
 
   let weather_el = document.querySelector('.current .weather');
   weather_el.innerText = weather.weather[0].main;
-
+  
   let hilow = document.querySelector('.hi-low');
   hilow.innerText = `${Math.round(weather.main.temp_min)}°c / ${Math.round(weather.main.temp_max)}°c`;
+  
+
+
+
 }
+
+
+if($('current .weather').html(weather.weather[0].main).includes("Rain")===true){
+        
+  $('body').css('background-image', "url('bg rain.jpg')");
+
+}
+
+
 
 function dateBuilder (d) {
   let months = ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "October", "November", "December"];
@@ -47,4 +113,10 @@ function dateBuilder (d) {
   let year = d.getFullYear();
 
   return `${day} ${date} ${month} ${year}`;
+
+
+
 }
+
+
+

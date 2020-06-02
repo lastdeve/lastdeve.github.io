@@ -33,7 +33,7 @@ header input {
   outline: none;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 16px 0px 16px 0px;
-  border-bottom: 3px solid #DF8E00;
+  border-bottom: 3px solid rgb(1, 204, 255);
   
   color: #313131;
   font-size: 20px;
@@ -72,10 +72,30 @@ main {
   font-weight: 900;
   margin: 30px 0px;
   text-shadow: 2px 10px rgba(0, 0, 0, 0.6);
+
 }
 
-.current .temp span {
-  font-weight: 500;
+.button {
+  color: rgb(255, 255, 255);
+  margin: 100px 0px;
+  border: 2px solid black;
+  border-radius: 25px;
+  background-color: rgb(122, 122, 122);
+  padding: 30px 40px;
+  text-shadow: 2px 4px rgba(0, 0, 0, 0.6);;
+  font-size: 25px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.button {
+  border-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+.button:hover {
+  background-color: rgb(61, 65, 61);
+  color: white;
 }
 
 .current .weather {
